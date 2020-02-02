@@ -34,12 +34,12 @@ pipeline {
             //start check
               sh 'code=`curl -sL --connect-timeout 20 --max-time 30 -w "%{http_code}\\n" "http://192.168.0.106/" -o /dev/null`'
               sh 'echo \"Found code $code\"'
-              if [ "$code" = "200" ]; then
-                echo "Website $url is online."
-                break
-              else
-                echo "Website $url seems to be offline."
-              fi
+              sh 'if [ "$code" = "200" ]; then'
+                sh 'echo "Website $url is online."'
+                sh 'break'
+              sh 'else'
+                sh 'echo "Website $url seems to be offline."'
+              sh 'fi'
             //end check
            }
          }
