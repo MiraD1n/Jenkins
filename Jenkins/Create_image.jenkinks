@@ -15,7 +15,7 @@ pipeline {
 			steps {
 				echo "========= start build image =========="
 				dir ('NGINX') {
-					sh 'docker build .'
+					sh 'docker build -t mynginx_first .'
 				}			
 			}
 		}
