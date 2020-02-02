@@ -14,13 +14,13 @@ pipeline {
 		stage("Build and Run new NGINX") {
 			steps {
 				echo "========= Start Build new NGINX =========="
-				dir ('NGINX') {
-					sh 'docker build -t mynginx_first_new .'
-				}
 				//Ignore ERROR with first build
 				catchError {
 					sh 'docker tag mynginx_first mynginx_first_stable_image'
-					sh 'docker tag mynginx_first_new mynginx_first'
+					sh 'docker rmi mynginx_first
+					dir ('NGINX') {
+					sh 'docker build -t mynginx_first .'
+				        }
 					sh 'docker stop mynginx_first'
 					sh 'docker rename mynginx_first mynginx_first_stable'
 					sh 'docker run --name mynginx_first -d -v /var/www:/usr/local/nginx/html -p 80:80 -t mynginx_first'
