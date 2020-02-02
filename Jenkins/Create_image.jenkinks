@@ -14,7 +14,7 @@ pipeline {
 		stage("create docker image") {
 			steps {
 				echo "========= start build image =========="
-				dir ('docker/NGINX') {
+				dir ('NGINX') {
 					sh 'docker build .'
 				}			
 			}
