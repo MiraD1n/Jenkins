@@ -1,0 +1,22 @@
+#!groovy
+//Run NGINX docker build
+properties([disableConcurrentBuilds()])
+
+pipeline {
+	agent {
+		label 'docker-agent'
+		}
+	options {
+		buildDiscarder (logRotator(numToKeepStr: '10', artifactNumToKeepStr: '10'))
+		timestamps()
+	}
+	stages {
+		stage("Stop_Rename") {
+			steps {
+				echo "========= START =========="
+					sh 'docker stop MMM'
+          sh 'docker rename MMM ubuntu_mx'
+			}
+		}
+	}
+}
