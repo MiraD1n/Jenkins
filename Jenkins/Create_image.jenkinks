@@ -1,6 +1,6 @@
 #!groovy
 //Run NGINX docker build
-properties([dosableConcurrentBuilds()])
+properties([disableConcurrentBuilds()])
 
 pipeline {
 	agent {
