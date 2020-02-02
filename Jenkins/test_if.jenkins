@@ -17,7 +17,7 @@ pipeline {
 					def code = sh(script: 'curl -sL --connect-timeout 20 --max-time 30 -w "%{http_code}\\n" "http://192.168.0.100/" -o /dev/null', returnStdout: true)
 					//def code = sh 'code=`curl -sL --connect-timeout 20 --max-time 30 -w "%{http_code}\\n" "http://192.168.0.100/" -o /dev/null`'
 					echo "${code}"
-					if ("${code}" == 200) {
+					if ("${code}" == "200") {
 						echo "Good" 
 					} else {
 						echo "Not Good"
