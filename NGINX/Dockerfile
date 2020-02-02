@@ -8,9 +8,9 @@ RUN apt-get update \
 && apt-get install -y cpp wget libpcre3-dev libc6-dev zlib1g-dev gcc make \
 && mkdir -p ~/temp/nginx-install \
 && cd ~/temp/nginx-install \
-&& wget http://nginx.org/download/nginx-1.7.9.tar.gz \
-&& tar -xvf nginx-1.7.9.tar.gz \
-&& cd ./nginx-1.7.9 \
+&& wget http://nginx.org/download/nginx-1.7.7.tar.gz \
+&& tar -xvf nginx-1.7.7.tar.gz \
+&& cd ./nginx-1.7.7 \
 && ./configure --with-cc-opt="-Wno-error" \
 && make \
 && make install \ 
