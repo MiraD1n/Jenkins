@@ -14,8 +14,11 @@ pipeline {
 		stage("Stop_Rename") {
 			steps {
 				echo "========= START =========="
-					sh 'docker stop MMM'
-                                        sh 'docker rename MMM ubuntu_mx'
+				sh 'docker stop mynginx_first'
+				sh 'docker rename mynginx_first mynginx_first_stable'
+				sh 'docker build -t mynginx_first .'
+				sh 'docker create --name mynginx_first mynginx_first' 
+				sh 'docker run -v /var/www:/usr/local/nginx/html -p 80:80 -t mynginx_first'
 			}
 		}
 	}
