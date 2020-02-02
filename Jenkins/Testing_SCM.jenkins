@@ -43,9 +43,7 @@ pipeline {
               fi
             }   
             //end check
-            }
-        
-        }
-        
-    }
+           }
+         }
+       }
 }
