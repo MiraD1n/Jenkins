@@ -23,11 +23,12 @@ pipeline {
 					} else {
 						echo "Not Good"
 					}*/
-					response=$(curl -s -o /dev/null -w "%{http_code}\n" http://192.168.0.100/)
-					if [ "$response" != "200" ]
-					then
- 					exit 1
-					fi
+					try {         
+					    new URL("http://192.168.0.100/").getText()
+					    return true
+					} catch (Exception e) {
+					    return false
+					}
 				}
 			}
 		}
