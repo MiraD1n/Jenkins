@@ -13,11 +13,8 @@ pipeline {
 	stages {
 		stage('Stop_And_Build') {
 			steps {
-			// sh 'code=`curl -sL --connect-timeout 20 --max-time 30 -w "%{http_code}\\n" "http://192.168.0.100/" -o /dev/null`'
-			 script{
-	                         def code = sh'`curl -sL --connect-timeout 20 --max-time 30 -w "%{http_code}\\n" "http://192.168.0.100/" -o /dev/null`'
-				 //echo "${code}"
-			       }
+				def code = sh 'code=`curl -sL --connect-timeout 20 --max-time 30 -w "%{http_code}\\n" "http://192.168.0.100/" -o /dev/null`'
+				echo "${code}"
 			}
 		}
 	}
