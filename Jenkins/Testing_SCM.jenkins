@@ -43,7 +43,7 @@ pipeline {
 				dir ('NGINX') {
 					sh 'docker build -t mynginx_first .'
 				}
-				sh 'docker run -d -v /var/www:/usr/local/nginx/html -p 80:80 -t mynginx_first'
+				sh 'docker run --name mynginx_first -d -v /var/www:/usr/local/nginx/html -p 80:80 -t mynginx_first'
 			}
 		}
 	}
