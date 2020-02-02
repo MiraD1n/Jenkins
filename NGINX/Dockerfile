@@ -15,6 +15,6 @@ RUN apt-get update \
 && make \
 && make install \ 
 && wget https://raw.githubusercontent.com/JasonGiedymin/nginx-init-ubuntu/master/nginx -O /etc/init.d/nginx \
-&& chmod +x /etc/init.d/nginx \
+&& chmod +x /etc/init.d/nginx
 VOLUME ["/var/www"]
 EXPOSE 80
