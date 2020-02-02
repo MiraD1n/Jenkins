@@ -22,7 +22,9 @@ pipeline {
 				sh 'else'
 					sh 'echo \"Not Good\"'
 				sh 'fi'*/
-				script {
+				
+				//First variant catch ERROR
+				/*script {
             				try {
                 				sh 'docker stop mynginx_first'
 						sh 'docker rename mynginx_first mynginx_first_stable'
@@ -30,6 +32,13 @@ pipeline {
 						echo err
 					}        
 				}
+        			echo currentBuild.result*/
+				
+				//Second variant catch ERROR
+				catchError {
+            				sh 'docker stop mynginx_first'
+					sh 'docker rename mynginx_first mynginx_first_stable'
+        			}
         			echo currentBuild.result
 				sh 'docker build -t mynginx_first .'
 				sh 'docker create --name mynginx_first mynginx_first' 
