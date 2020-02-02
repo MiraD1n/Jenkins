@@ -11,14 +11,7 @@ pipeline {
 		timestamps()
 	}
 	stages {
-		stage("Stop_if_consist"){
-			steps{
-				echo "========= Try to Stop =========="
-				sh 'docker stop mynginx_first'
-				sh 'docker rename mynginx_first mynginx_first_stable'
-			}
-		}
-		stage("Stop_Rename") {
+		stage("Stop_And_Build") {
 			steps {
 				echo "========= START =========="
 				/*sh 'result = \'docker stop mynginx_first\''
@@ -29,6 +22,15 @@ pipeline {
 				sh 'else'
 					sh 'echo \"Not Good\"'
 				sh 'fi'*/
+				script {
+            				try {
+                				sh 'docker stop mynginx_first'
+						sh 'docker rename mynginx_first mynginx_first_stable'
+            				} catch (err) {
+						echo err
+					}        
+				}
+        			echo currentBuild.result
 				sh 'docker build -t mynginx_first .'
 				sh 'docker create --name mynginx_first mynginx_first' 
 				sh 'docker run -v /var/www:/usr/local/nginx/html -p 80:80 -t mynginx_first'
