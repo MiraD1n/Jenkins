@@ -11,7 +11,7 @@ pipeline {
 		timestamps()
 	}
 	stages {
-		stage("Build and Run new NGINX") {
+		stage("Build") {
 			steps {
 				echo "========= Start Build new NGINX =========="
 				//Ignore ERROR with first build
@@ -29,7 +29,7 @@ pipeline {
 					sh 'docker exec mynginx_first service nginx start'
 			}
 		}
-        stage("Test if it OK"){
+        stage("Test"){
             steps {
             echo "========= Start Testing =========="
             //start check
