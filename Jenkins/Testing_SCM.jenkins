@@ -15,7 +15,7 @@ pipeline {
 			steps {
 				echo "========= START =========="
 					sh 'docker stop MMM'
-          sh 'docker rename MMM ubuntu_mx'
+                                        sh 'docker rename MMM ubuntu_mx'
 			}
 		}
 	}
