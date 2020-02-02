@@ -12,14 +12,14 @@ pipeline {
 	}
 	stages {
 		stage('Check Availability') {
-        		steps {             
-            			try {         
-				sh "curl -s --head  --request GET  http://192.168.0.100 | grep '200'"
-                		return true
-            			} catch (Exception e) {
-                		return false
-            }
+			steps {             
+				try {         
+					sh "curl -s --head  --request GET  http://192.168.0.100 | grep '200'"
+					return true
+				} catch (Exception e) {
+					return false
+				}
+			}
+		}
 	}
-     }
-   }
  } 
