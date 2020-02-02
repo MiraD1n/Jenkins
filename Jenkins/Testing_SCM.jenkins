@@ -17,7 +17,7 @@ pipeline {
 				//Ignore ERROR with first build
 				catchError {
 					sh 'docker tag mynginx_first mynginx_first_stable_image'
-					sh 'docker rmi mynginx_first
+					sh 'docker rmi mynginx_first'
 					dir ('NGINX') {
 					sh 'docker build -t mynginx_first .'
 				        }
