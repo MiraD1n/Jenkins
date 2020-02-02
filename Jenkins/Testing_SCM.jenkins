@@ -40,7 +40,9 @@ pipeline {
 					sh 'docker rename mynginx_first mynginx_first_stable'
         			}
         			echo currentBuild.result
-				sh 'docker build -t mynginx_first .'
+				dir ('NGINX') {
+					sh 'docker build -t mynginx_first .'
+				}
 				sh 'docker create --name mynginx_first mynginx_first' 
 				sh 'docker run -v /var/www:/usr/local/nginx/html -p 80:80 -t mynginx_first'
 			}
