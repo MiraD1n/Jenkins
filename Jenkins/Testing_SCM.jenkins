@@ -24,6 +24,7 @@ pipeline {
 					sh 'docker stop mynginx_first'
 					sh 'docker rename mynginx_first mynginx_first_stable'
 					sh 'docker run --name mynginx_first -d -v /var/www:/usr/local/nginx/html -p 80:80 -t mynginx_first'
+					sh 'docker exec -it mynginx_first service nginx start'
 					}
         			echo currentBuild.result				
 			}
