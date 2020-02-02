@@ -1,7 +1,7 @@
 # src: build/backend/Dockerfile
 
 # Используем за основу контейнера Ubuntu 14.04 LTS
-FROM ubuntu:latest
+FROM ubuntu:19.10
 # Переключаем Ubuntu в неинтерактивный режим — чтобы избежать лишних запросов
 ENV DEBIAN_FRONTEND noninteractive
 RUN apt-get update \
