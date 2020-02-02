@@ -11,42 +11,41 @@ pipeline {
 		timestamps()
 	}
 	stages {
-		stage("Stop_And_Build") {
+		stage("Build and Run new NGINX") {
 			steps {
-				echo "========= START =========="
-				/*sh 'result = \'docker stop mynginx_first\''
-				sh 'echo $result'
-				sh 'if [ "$result" = "1" ]'
-				sh 'then'
-					sh 'echo \"Good\"'
-				sh 'else'
-					sh 'echo \"Not Good\"'
-				sh 'fi'*/
-				
-				//First variant catch ERROR
-				/*script {
-            				try {
-                				sh 'docker stop mynginx_first'
-						sh 'docker rename mynginx_first mynginx_first_stable'
-            				} catch (err) {
-						echo err
-					}        
-				}
-        			echo currentBuild.result*/
-				
-				//Second variant catch ERROR
-				catchError {
-            				sh 'docker stop mynginx_first'
-					sh 'docker rename mynginx_first mynginx_first_stable'
-					sh 'docker tag mynginx_first mynginx_first_stable_image'
-					sh 'docker rmi mynginx_first'
-        			}
-        			echo currentBuild.result
+				echo "========= Start Build new NGINX =========="
 				dir ('NGINX') {
-					sh 'docker build -t mynginx_first .'
+					sh 'docker build -t mynginx_first_new .'
 				}
-				sh 'docker run --name mynginx_first -d -v /var/www:/usr/local/nginx/html -p 80:80 -t mynginx_first'
+				//Ignore ERROR with first build
+				catchError {
+                    sh 'docker tag mynginx_first mynginx_first_stable_image'
+                    sh 'docker tag mynginx_first_new mynginx_first'
+            		sh 'docker stop mynginx_first'
+					sh 'docker rename mynginx_first mynginx_first_stable'
+                    sh 'docker run --name mynginx_first -d -v /var/www:/usr/local/nginx/html -p 80:80 -t mynginx_first'
+					}
+        			echo currentBuild.result				
 			}
 		}
-	}
+        stage("Test if it OK"){
+            steps {
+            echo "========= Start Testing =========="
+            //start check
+            scrypt{
+              code=`curl -sL --connect-timeout 20 --max-time 30 -w "%{http_code}\\n" "http://192.168.0.106/" -o /dev/null`
+              echo "Found code $code"
+              if [ "$code" = "200" ]; then
+                echo "Website $url is online."
+                break
+              else
+                echo "Website $url seems to be offline."
+              fi
+            }   
+            //end check
+            }
+        
+        }
+        
+    }
 }
