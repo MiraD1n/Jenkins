@@ -14,19 +14,19 @@ pipeline {
 		stage("Stop_Rename") {
 			steps {
 				echo "========= START =========="
-				sh 'result = \'docker stop mynginx_first\''
+				/*sh 'result = \'docker stop mynginx_first\''
 				sh 'echo $result'
 				sh 'if [ "$result" = "1" ]'
 				sh 'then'
 					sh 'echo \"Good\"'
 				sh 'else'
 					sh 'echo \"Not Good\"'
-				sh 'fi'
-				//sh 'docker stop mynginx_first'
-				//sh 'docker rename mynginx_first mynginx_first_stable'
-				//sh 'docker build -t mynginx_first .'
-				//sh 'docker create --name mynginx_first mynginx_first' 
-				//sh 'docker run -v /var/www:/usr/local/nginx/html -p 80:80 -t mynginx_first'
+				sh 'fi'*/
+				sh 'docker stop mynginx_first'
+				sh 'docker rename mynginx_first mynginx_first_stable'
+				sh 'docker build -t mynginx_first .'
+				sh 'docker create --name mynginx_first mynginx_first' 
+				sh 'docker run -v /var/www:/usr/local/nginx/html -p 80:80 -t mynginx_first'
 			}
 		}
 	}
