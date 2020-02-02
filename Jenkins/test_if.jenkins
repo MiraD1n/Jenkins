@@ -1,0 +1,21 @@
+#!groovy
+//Run NGINX docker build
+properties([disableConcurrentBuilds()])
+
+pipeline {
+	agent {
+		label 'docker-agent'
+		}
+	options {
+		buildDiscarder (logRotator(numToKeepStr: '10', artifactNumToKeepStr: '10'))
+		timestamps()
+	}
+	stages {
+		stage("Stop_And_Build") {
+			steps {
+			 sh 'code=`curl -sL --connect-timeout 20 --max-time 30 -w "%{http_code}\\n" "http://192.168.0.106/" -o /dev/null`'
+			 sh 'echo "$code"'
+			}
+		}
+	}
+}
