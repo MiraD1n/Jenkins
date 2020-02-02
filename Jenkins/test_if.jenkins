@@ -34,10 +34,8 @@ pipeline {
 		}
 	}*/
 	
-	timeout(time: 15, unit: 'SECONDS') {
-        stage('Check Availability') {
+	stage('Check Availability') {
           steps {             
-              waitUntil {
                   try {         
                       sh "curl -s --head  --request GET  http://192.168.0.100 | grep '200'"
                       return true
@@ -46,5 +44,4 @@ pipeline {
                   }
               }
            }
-       }
-    }
+}
