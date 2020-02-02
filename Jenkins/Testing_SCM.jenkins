@@ -38,6 +38,8 @@ pipeline {
 				catchError {
             				sh 'docker stop mynginx_first'
 					sh 'docker rename mynginx_first mynginx_first_stable'
+					sh 'docker tag mynginx_first mynginx_first_stable_image'
+					sh 'docker rmi mynginx_first'
         			}
         			echo currentBuild.result
 				dir ('NGINX') {
