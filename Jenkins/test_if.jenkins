@@ -5,21 +5,32 @@ properties([disableConcurrentBuilds()])
 pipeline {
 	agent {
 		label 'docker-agent'
-	}
+		}
 	options {
 		buildDiscarder (logRotator(numToKeepStr: '10', artifactNumToKeepStr: '10'))
 		timestamps()
 	}
-	stages {
-		stage('Check Availability') {
-			steps {             
-				try {         
-					sh "curl -s --head  --request GET  http://192.168.0.100 | grep '200'"
-					return true
-				} catch (Exception e) {
-					return false
-				}
+	/*stages {
+		stage('Stop_And_Build') {
+			steps {
+				/*script{
+					/*def code = sh(script: 'curl -sL --connect-timeout 20 --max-time 30 -w "%{http_code}\\n" "http://192.168.0.100/" -o /dev/null', returnStdout: true)
+					//def code = sh 'code=`curl -sL --connect-timeout 20 --max-time 30 -w "%{http_code}\\n" "http://192.168.0.100/" -o /dev/null`'
+					echo "${code}"
+					println "label[${code}]"
+					if ("${code}" == 200) {
+						echo "Good" 
+					} else {
+						echo "Not Good"
+					}*/
+					/*try {         
+					    new URL("http://192.168.0.100/").getText()
+					    return true
+					} catch (Exception e) {
+					    return false
+					}*/
+				}*/
 			}
 		}
-	}
- } 
+	}*/
+}
