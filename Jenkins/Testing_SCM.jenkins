@@ -45,7 +45,7 @@ pipeline {
 								sh 'docker rmi mynginx_first_stable_image'
 							}
 							catch (exc)	{
-								echo "first build"
+								currentBuild.result = 'SUCCESS'
 							}							
 							return true
 						} else {
