@@ -17,6 +17,7 @@ pipeline {
 				//Ignore ERROR with first build
 				catchError (buildResult: 'SUCCESS', stageResult: 'FAILURE') {
 					sh 'docker rmi mynginx_first_stable_image'
+					sh 'docker rm mynginx_first_stable'
 					sh 'docker tag mynginx_first mynginx_first_stable_image'
 					sh 'docker rmi mynginx_first'
 					sh 'docker stop mynginx_first'
