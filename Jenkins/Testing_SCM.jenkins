@@ -14,12 +14,12 @@ pipeline {
 		stage("Build") {
 			steps {
 				echo "========= Start Build new NGINX =========="
-				//Ignore ERROR with first build
+				//Clean if trash remains 
 				catchError (buildResult: 'SUCCESS', stageResult: 'FAILURE') {
 					sh 'docker rmi mynginx_first_stable_image'
 					sh 'docker rm mynginx_first_stable'
 					}
-        		//echo currentBuild.result
+        		//Ignore ERROR with first build 
 				catchError (buildResult: 'SUCCESS', stageResult: 'FAILURE') {
 					sh 'docker tag mynginx_first mynginx_first_stable_image'
 					sh 'docker rmi mynginx_first'
@@ -31,9 +31,8 @@ pipeline {
 				    }
 				sh 'docker run --name mynginx_first -d -p 80:80 -t mynginx_first'
 				sh 'docker exec mynginx_first wget -O /usr/local/nginx/html/index.html https://raw.githubusercontent.com/MiraD1n/OpsWorks/master/WebProject/index.html'
-				//test error
-				sh 'docker exec mynginx_first rm /usr/local/nginx/html/index.html'
-				//do comment below to test crash
+				//try to comment/uncomments below to test different ways of crashes
+				//sh 'docker exec mynginx_first rm /usr/local/nginx/html/index.html'
 				sh 'docker exec mynginx_first service nginx start'
 			}
 		}
@@ -52,30 +51,30 @@ pipeline {
 							return						
 						} else {
 							echo "Not Good"
-							sh 'docker stop mynginx_first'//остановил бракованый контейнер
-							sh 'docker rm mynginx_first'//удалил бракованый контейнер
-							sh 'docker rename mynginx_first_stable mynginx_first'//переименовал назад рабочий контейнер
-							sh 'docker start mynginx_first'//запустил рабочий контейнер
-							sh 'docker exec mynginx_first service nginx start'//запустил NGINX
-							sh 'docker tag mynginx_first mynginx_first_image_bad'//переименовал бракованый образ 
-							sh 'docker tag mynginx_first_stable_image mynginx_first'//переименовал стабильный образ назад
-							sh 'docker rmi mynginx_first_stable_image'//удалил неактуальный тег стабильного образа
-							sh 'docker rmi mynginx_first_image_bad'//удалил бракованный контейнер
+							sh 'docker stop mynginx_first'//stop bad container
+							sh 'docker rm mynginx_first'//del bad container
+							sh 'docker rename mynginx_first_stable mynginx_first'//rename back work container
+							sh 'docker start mynginx_first'//run work container
+							sh 'docker exec mynginx_first service nginx start'//start NGINX
+							sh 'docker tag mynginx_first mynginx_first_image_bad'//rename bad image
+							sh 'docker tag mynginx_first_stable_image mynginx_first'//rename back work image
+							sh 'docker rmi mynginx_first_stable_image'//del old image tag
+							sh 'docker rmi mynginx_first_image_bad'//del bad image
 							currentBuild.result = 'FAILURE'
 							return
 						}
 					}	
 					catch (exc){
 						echo "Not Good"
-						sh 'docker stop mynginx_first'//остановил бракованый контейнер
-						sh 'docker rm mynginx_first'//удалил бракованый контейнер
-						sh 'docker rename mynginx_first_stable mynginx_first'//переименовал назад рабочий контейнер
-						sh 'docker start mynginx_first'//запустил рабочий контейнер
-						sh 'docker exec mynginx_first service nginx start'//запустил NGINX
-						sh 'docker tag mynginx_first mynginx_first_image_bad'//переименовал бракованый образ 
-						sh 'docker tag mynginx_first_stable_image mynginx_first'//переименовал стабильный образ назад
-						sh 'docker rmi mynginx_first_stable_image'//удалил неактуальный тег стабильного образа
-						sh 'docker rmi mynginx_first_image_bad'//удалил бракованный контейнер
+						sh 'docker stop mynginx_first'//stop bad container
+						sh 'docker rm mynginx_first'//del bad container
+						sh 'docker rename mynginx_first_stable mynginx_first'//rename back work container
+						sh 'docker start mynginx_first'//run work container
+						sh 'docker exec mynginx_first service nginx start'//start NGINX
+						sh 'docker tag mynginx_first mynginx_first_image_bad'//rename bad image 
+						sh 'docker tag mynginx_first_stable_image mynginx_first'//rename back work image
+						sh 'docker rmi mynginx_first_stable_image'//del old image tag
+						sh 'docker rmi mynginx_first_image_bad'//del bad image
 						currentBuild.result = 'FAILURE'
 						return
 					}					
