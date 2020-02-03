@@ -11,10 +11,10 @@
 6. активировать Jenkins через ввод пароля
 7. установить рекомендуемые плагины
 8. установить плагин Docker
-9. настроить Pipeline Model Definition
+9. настроить плагин Docker (Manage Jenkins -> Configure System -> Add a new cloud *в самом низу страницы)
+* настроить Pipeline Model Definition
 * Docker Label: docker-agent
 * Docker registry URL: tcp://DOCKER_HOSTNAME_IP:2375
-10. настроить плагин Docker (Manage Jenkins -> Configure System -> Add a new cloud *в самом низу страницы)
 * Docker cloud details...
 * Name: docker
 * Docker Host URI: tcp://DOCKER_HOSTNAME_IP:2375
@@ -40,8 +40,8 @@
 * Connect method: Connect with SSH
 * SSH key: Inject SSH key
 * User: root
-11. Apply -> Save
-12. Restart Jenkins
+10. Apply -> Save
+11. Restart Jenkins
 
 # Создание проекта на деплой NGINX
 1. New Item
