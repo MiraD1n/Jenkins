@@ -27,15 +27,13 @@ pipeline {
 				        }
 					sh 'docker run --name mynginx_first -d -p 80:80 -t mynginx_first'
 					sh 'docker exec mynginx_first wget -O /usr/local/nginx/html/index.html https://raw.githubusercontent.com/MiraD1n/OpsWorks/master/WebProject/index.html'
-					sh 'docker exec mynginx_first service nginx start'
+					//to test crash comment below
+					//sh 'docker exec mynginx_first service nginx start'
 			}
 		}
         stage("Test"){
             steps {
 				echo "========= Start Testing =========="
-				//sh 'code=`curl -sL --connect-timeout 20 --max-time 30 -w "%{http_code}\\n" "http://192.168.0.106/" -o /dev/null`'
-				//sh 'echo \"Found code $code\"'
-				//script begin
 				script{
 					try{
 						def code = sh(script: 'curl -sL --connect-timeout 20 --max-time 30 -w "%{http_code}\\n" "http://192.168.0.100/" -o /dev/null', returnStdout: true)
@@ -45,19 +43,7 @@ pipeline {
 								sh 'docker rm mynginx_first_stable'
 								sh 'docker rmi mynginx_first_stable_image'
 							}
-							return
-							/*//work
-							try{
-								sh 'docker rm mynginx_first_stable'
-								sh 'docker rmi mynginx_first_stable_image'
-							}
-							catch (exc)	{
-								currentBuild.result = 'SUCCESS'
-								echo "catch it"
-								return
-							}							
-							//stop commit*/
-							
+							return						
 						} else {
 							echo "Not Good"
 							sh 'docker stop mynginx_first'//остановил бракованый контейнер
