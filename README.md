@@ -12,34 +12,34 @@
 7. установить рекомендуемые плагины
 8. установить плагин Docker
 9. настроить Pipeline Model Definition
-> Docker Label: docker-agent
-> Docker registry URL: tcp://DOCKER_HOSTNAME_IP:2375
+* Docker Label: docker-agent
+* Docker registry URL: tcp://DOCKER_HOSTNAME_IP:2375
 10. настроить плагин Docker (Manage Jenkins -> Configure System -> Add a new cloud *в самом низу страницы)
->> Docker cloud details...
->>> Name: docker
->>> Docker Host URI: tcp://DOCKER_HOSTNAME_IP:2375
->>> Выполнить Test Connection: при успешном подключении отображает версию
->>>> *в случае ошибки необходимо внести правки в конфигурационные файлы на хосте с docker
->>>>> vim /etc/default/docker -> и добавить ExecStart=/usr/bin/dockerd -H fd:// -H tcp://0.0.0.0:2375
->>>>> vim /lib/systemd/system/docker.service -> и внести правки:
->>>>>> ExecStart=/usr/bin/dockerd -H fd://                <--- before
->>>>>> ExecStart=/usr/bin/dockerd -H fd:// -H tcp://0.0.0.0:2375    <--- After
->>>>> выполнить рестарт докера
->>>>>> systemctl daemon-reload
->>>>>> systemctl restart docker
->>>> провести повторную попытку подключения
->>> Enabled: true
->> Docker Agent templates
->>> Labels: docker-agent
->>> Name: docker-agent
->>> Docker Image: benhall/dind-jenkins-agent:v2
->>> Открыть Container settings
->>>> Volumes: /var/run/docker.sock:/var/run/docker.sock
->>> Enabled: true
->>> Remote File System Root: /home/jenkins
->>> Connect method: Connect with SSH
->>>> SSH key: Inject SSH key
->>>>> User: root
+* Docker cloud details...
+* Name: docker
+* Docker Host URI: tcp://DOCKER_HOSTNAME_IP:2375
+* Выполнить Test Connection: при успешном подключении отображает версию
+* в случае ошибки необходимо внести правки в конфигурационные файлы на хосте с docker
+* vim /etc/default/docker -> и добавить ExecStart=/usr/bin/dockerd -H fd:// -H tcp://0.0.0.0:2375
+* vim /lib/systemd/system/docker.service -> и внести правки:
+* ExecStart=/usr/bin/dockerd -H fd://                <--- before
+* ExecStart=/usr/bin/dockerd -H fd:// -H tcp://0.0.0.0:2375    <--- After
+* выполнить рестарт докера
+* systemctl daemon-reload
+* systemctl restart docker
+* провести повторную попытку подключения
+* Enabled: true
+* Docker Agent templates
+* Labels: docker-agent
+* Name: docker-agent
+* Docker Image: benhall/dind-jenkins-agent:v2
+* Открыть Container settings
+* Volumes: /var/run/docker.sock:/var/run/docker.sock
+* Enabled: true
+* Remote File System Root: /home/jenkins
+* Connect method: Connect with SSH
+* SSH key: Inject SSH key
+* User: root
 11. Apply -> Save
 12. Restart Jenkins
 
