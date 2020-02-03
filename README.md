@@ -49,9 +49,9 @@
 2. Enter an item name
 3. Выбираем Pipeline -> OK
 4. Pipeline -> Pipeline script from SCM
->> SCM -> Git
->>> Repository URL: https://github.com/MiraD1n/OpsWorks.git
->>> Script Path: Jenkins/Build_NGINX.jenkins
+* SCM -> Git
+* Repository URL: https://github.com/MiraD1n/OpsWorks.git
+* Script Path: Jenkins/Build_NGINX.jenkins
 5. Apply -> Save
 
 # Запуск деплоя и тестирование:
