@@ -27,7 +27,7 @@ pipeline {
 				        }
 					sh 'wget https://raw.githubusercontent.com/MiraD1n/OpsWorks/master/WebProject/index.html -O /var/www' 
 					sh 'docker run --name mynginx_first -d -v /var/www:/usr/local/nginx/html -p 80:80 -t mynginx_first'
-					//sh 'docker exec mynginx_first service nginx start'
+					sh 'docker exec mynginx_first service nginx start'
 			}
 		}
         stage("Test"){
