@@ -50,6 +50,7 @@ pipeline {
 							sh 'docker rm mynginx_first'//удалил бракованый контейнер
 							sh 'docker rename mynginx_first_stable mynginx_first'//переименовал назад рабочий контейнер
 							sh 'docker start mynginx_first'//запустил рабочий контейнер
+							sh 'docker exec mynginx_first service nginx start'//запустил NGINX
 							sh 'docker tag mynginx_first mynginx_first_image_bad'//переименовал бракованый образ 
 							sh 'docker tag mynginx_first_stable_image mynginx_first'//переименовал стабильный образ назад
 							sh 'docker rmi mynginx_first_stable_image'//удалил неактуальный тег стабильного образа
@@ -64,6 +65,7 @@ pipeline {
 						sh 'docker rm mynginx_first'//удалил бракованый контейнер
 						sh 'docker rename mynginx_first_stable mynginx_first'//переименовал назад рабочий контейнер
 						sh 'docker start mynginx_first'//запустил рабочий контейнер
+						sh 'docker exec mynginx_first service nginx start'//запустил NGINX
 						sh 'docker tag mynginx_first mynginx_first_image_bad'//переименовал бракованый образ 
 						sh 'docker tag mynginx_first_stable_image mynginx_first'//переименовал стабильный образ назад
 						sh 'docker rmi mynginx_first_stable_image'//удалил неактуальный тег стабильного образа
