@@ -32,8 +32,8 @@ pipeline {
 				sh 'docker run --name mynginx -d -p 80:80 -t mynginx'
 				sh 'docker exec mynginx wget -O /usr/local/nginx/html/index.html https://raw.githubusercontent.com/MiraD1n/OpsWorks/master/WebProject/index.html'
 				//try to comment/uncomments below to test different ways of crashes
-				//sh 'docker exec mynginx rm /usr/local/nginx/html/index.html'
-				//sh 'docker exec mynginx service nginx start'
+				sh 'docker exec mynginx rm /usr/local/nginx/html/index.html'
+				sh 'docker exec mynginx service nginx start'
 			}
 		}
         stage("Test"){
