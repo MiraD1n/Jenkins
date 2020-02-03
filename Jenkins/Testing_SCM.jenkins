@@ -16,24 +16,24 @@ pipeline {
 				echo "========= Start Build new NGINX =========="
 				//Clean if trash remains 
 				catchError (buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-					sh 'docker rmi mynginx_first_stable_image'
-					sh 'docker rm mynginx_first_stable'
+					sh 'docker rmi mynginx_stable_image'
+					sh 'docker rm mynginx_stable'
 					}
         		//Ignore ERROR with first build 
 				catchError (buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-					sh 'docker tag mynginx_first mynginx_first_stable_image'
-					sh 'docker rmi mynginx_first'
-					sh 'docker stop mynginx_first'
-					sh 'docker rename mynginx_first mynginx_first_stable'
+					sh 'docker tag mynginx mynginx_stable_image'
+					sh 'docker rmi mynginx'
+					sh 'docker stop mynginx'
+					sh 'docker rename mynginx mynginx_stable'
 				}
 				dir ('NGINX') {
-				sh 'docker build -t mynginx_first .'
+				sh 'docker build -t mynginx .'
 				    }
-				sh 'docker run --name mynginx_first -d -p 80:80 -t mynginx_first'
-				sh 'docker exec mynginx_first wget -O /usr/local/nginx/html/index.html https://raw.githubusercontent.com/MiraD1n/OpsWorks/master/WebProject/index.html'
+				sh 'docker run --name mynginx -d -p 80:80 -t mynginx'
+				sh 'docker exec mynginx wget -O /usr/local/nginx/html/index.html https://raw.githubusercontent.com/MiraD1n/OpsWorks/master/WebProject/index.html'
 				//try to comment/uncomments below to test different ways of crashes
-				//sh 'docker exec mynginx_first rm /usr/local/nginx/html/index.html'
-				sh 'docker exec mynginx_first service nginx start'
+				//sh 'docker exec mynginx rm /usr/local/nginx/html/index.html'
+				sh 'docker exec mynginx service nginx start'
 			}
 		}
         stage("Test"){
@@ -45,36 +45,36 @@ pipeline {
 						if (code.trim().equals("200")) {
 							echo "Good"
 							catchError (buildResult: 'SUCCESS', stageResult: 'FAILURE') {	
-								sh 'docker rm mynginx_first_stable'
-								sh 'docker rmi mynginx_first_stable_image'
+								sh 'docker rm mynginx_stable'
+								sh 'docker rmi mynginx_stable_image'
 							}
 							return						
 						} else {
 							echo "Not Good"
-							sh 'docker stop mynginx_first'//stop bad container
-							sh 'docker rm mynginx_first'//del bad container
-							sh 'docker rename mynginx_first_stable mynginx_first'//rename back work container
-							sh 'docker start mynginx_first'//run work container
-							sh 'docker exec mynginx_first service nginx start'//start NGINX
-							sh 'docker tag mynginx_first mynginx_first_image_bad'//rename bad image
-							sh 'docker tag mynginx_first_stable_image mynginx_first'//rename back work image
-							sh 'docker rmi mynginx_first_stable_image'//del old image tag
-							sh 'docker rmi mynginx_first_image_bad'//del bad image
+							sh 'docker stop mynginx'//stop bad container
+							sh 'docker rm mynginx'//del bad container
+							sh 'docker rename mynginx_stable mynginx'//rename back work container
+							sh 'docker start mynginx'//run work container
+							sh 'docker exec mynginx service nginx start'//start NGINX
+							sh 'docker tag mynginx mynginx_image_bad'//rename bad image
+							sh 'docker tag mynginx_stable_image mynginx'//rename back work image
+							sh 'docker rmi mynginx_stable_image'//del old image tag
+							sh 'docker rmi mynginx_image_bad'//del bad image
 							currentBuild.result = 'FAILURE'
 							return
 						}
 					}	
 					catch (exc){
 						echo "Not Good"
-						sh 'docker stop mynginx_first'//stop bad container
-						sh 'docker rm mynginx_first'//del bad container
-						sh 'docker rename mynginx_first_stable mynginx_first'//rename back work container
-						sh 'docker start mynginx_first'//run work container
-						sh 'docker exec mynginx_first service nginx start'//start NGINX
-						sh 'docker tag mynginx_first mynginx_first_image_bad'//rename bad image 
-						sh 'docker tag mynginx_first_stable_image mynginx_first'//rename back work image
-						sh 'docker rmi mynginx_first_stable_image'//del old image tag
-						sh 'docker rmi mynginx_first_image_bad'//del bad image
+						sh 'docker stop mynginx'//stop bad container
+						sh 'docker rm mynginx'//del bad container
+						sh 'docker rename mynginx_stable mynginx'//rename back work container
+						sh 'docker start mynginx'//run work container
+						sh 'docker exec mynginx service nginx start'//start NGINX
+						sh 'docker tag mynginx mynginx_image_bad'//rename bad image 
+						sh 'docker tag mynginx_stable_image mynginx'//rename back work image
+						sh 'docker rmi mynginx_stable_image'//del old image tag
+						sh 'docker rmi mynginx_image_bad'//del bad image
 						currentBuild.result = 'FAILURE'
 						return
 					}					
