@@ -48,8 +48,9 @@ pipeline {
 							catch (exc)	{
 								echo "catch it"
 								currentBuild.result = 'SUCCESS'
+								return true
 							}							
-							return true
+							//return true
 						} else {
 							echo "Not Good"
 							sh 'docker stop mynginx_first'//остановил бракованый контейнер
