@@ -18,12 +18,14 @@ pipeline {
 				catchError (buildResult: 'SUCCESS', stageResult: 'FAILURE') {
 					sh 'docker rmi mynginx_first_stable_image'
 					sh 'docker rm mynginx_first_stable'
+					}
+        		//echo currentBuild.result
+				catchError (buildResult: 'SUCCESS', stageResult: 'FAILURE') {
 					sh 'docker tag mynginx_first mynginx_first_stable_image'
 					sh 'docker rmi mynginx_first'
 					sh 'docker stop mynginx_first'
 					sh 'docker rename mynginx_first mynginx_first_stable'
-					}
-        		echo currentBuild.result
+				}
 				dir ('NGINX') {
 				sh 'docker build -t mynginx_first .'
 				    }
