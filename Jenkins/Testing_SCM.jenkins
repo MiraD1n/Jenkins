@@ -46,8 +46,10 @@ pipeline {
 							echo "Good"
 							catchError (buildResult: 'SUCCESS', stageResult: 'FAILURE') {	
 								sh 'docker rm mynginx_stable'
-								sh 'docker rmi mynginx_stable_image'
 							}
+							catchError (buildResult: 'SUCCESS', stageResult: 'FAILURE') {	
+								sh 'docker rmi mynginx_stable_image'
+							}	
 							return						
 						} else {
 							echo "Not Good"
