@@ -4,15 +4,15 @@
 2. docker-compose.yml файл для запуска Jenkins
 
 # Запуск Jenkins
-> перейти в директорию с docker-compose.yml файл для запуска Jenkins
-> выполнить команду docker-compose up -d
-> дождатся запуска Jenkins
-> через команду docker logs <CONTAINER ID> взять password обрамленный символами *****
-> перейти по URL http://localhost:8080
-> активировать Jenkins через ввод пароля
-> установить рекомендуемые плагины
-> установить плагин Docker
-> настроить Pipeline Model Definition
+1. перейти в директорию с docker-compose.yml файл для запуска Jenkins
+2. выполнить команду docker-compose up -d
+3. дождатся запуска Jenkins
+4. через команду docker logs <CONTAINER ID> взять password обрамленный символами *****
+5. перейти по URL http://localhost:8080
+6. активировать Jenkins через ввод пароля
+7. установить рекомендуемые плагины
+8. установить плагин Docker
+9. настроить Pipeline Model Definition
 >> Docker Label: docker-agent
 >> Docker registry URL: tcp://DOCKER_HOSTNAME_IP:2375
 > настроить плагин Docker (Manage Jenkins -> Configure System -> Add a new cloud *в самом низу страницы)
