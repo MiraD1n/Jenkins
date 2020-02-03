@@ -1,6 +1,6 @@
 # Запуск Jenkins
 1. Выполнить git clone https://github.com/MiraD1n/OpsWorks.git
-2. перейти в директорию cd ./Jenkins
+2. перейти в директорию cd ./OpsWorks/Jenkins
 3. выполнить команду docker-compose up -d
 4. дождатся запуска Jenkins
 5. через команду docker logs <CONTAINER ID> взять password обрамленный символами *****
