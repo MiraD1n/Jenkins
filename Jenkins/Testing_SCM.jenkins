@@ -15,7 +15,7 @@ pipeline {
 			steps {
 				echo "========= Start Build new NGINX =========="
 				//Ignore ERROR with first build
-				catchError {
+				catchError (buildResult: 'SUCCESS', stageResult: 'FAILURE') {
 					sh 'docker tag mynginx_first mynginx_first_stable_image'
 					sh 'docker rmi mynginx_first'
 					sh 'docker stop mynginx_first'
@@ -41,7 +41,7 @@ pipeline {
 						def code = sh(script: 'curl -sL --connect-timeout 20 --max-time 30 -w "%{http_code}\\n" "http://192.168.0.100/" -o /dev/null', returnStdout: true)
 						if (code.trim().equals("200")) {
 							echo "Good"
-							catchError {	
+							catchError (buildResult: 'SUCCESS', stageResult: 'FAILURE') {	
 								sh 'docker rm mynginx_first_stable'
 								sh 'docker rmi mynginx_first_stable_image'
 							}
