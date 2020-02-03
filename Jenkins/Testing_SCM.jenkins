@@ -40,8 +40,13 @@ pipeline {
 						def code = sh(script: 'curl -sL --connect-timeout 20 --max-time 30 -w "%{http_code}\\n" "http://192.168.0.100/" -o /dev/null', returnStdout: true)
 						if (code.trim().equals("200")) {
 							echo "Good"
-							sh 'docker rm mynginx_first_stable'
-							sh 'docker rmi mynginx_first_stable_image'
+							try{
+								sh 'docker rm mynginx_first_stable'
+								sh 'docker rmi mynginx_first_stable_image'
+							}
+							catch (exc)	{
+								echo "first build"
+							}							
 							return true
 						} else {
 							echo "Not Good"
@@ -69,36 +74,8 @@ pipeline {
 						sh 'docker rmi mynginx_first_image_bad'//удалил бракованный контейнер
 						currentBuild.result = 'FAILURE'
 						return
-						//println exc
 					}					
-					//def code = sh 'code=`curl -sL --connect-timeout 20 --max-time 30 -w "%{http_code}\\n" "http://192.168.0.100/" -o /dev/null`'
-					
-					//**********Block new
-					//int status = sh(script: "curl -sLI -w '%{http_code}' http://192.168.0.100/ -o /dev/null", returnStdout: true)
-					//if (status != 200 && status != 201) {
-					//	error("Returned status code = $status when calling http://192.168.0.100/")
-					//}
-					//**********End block new
-					
-					/* Work --->
-					if (code.trim().equals("200")) {
-						echo "Good"
-						sh 'docker rm mynginx_first_stable'
-						sh 'docker rmi mynginx_first_stable_image'
-						return true
-					} else {
-						echo "Not Good"
-						sh 'docker stop mynginx_first'//остановил бракованый контейнер
-						sh 'docker rm mynginx_first'//удалил бракованый контейнер
-						sh 'docker rename mynginx_first_stable mynginx_first'//переименовал назад рабочий контейнер
-						sh 'docker start mynginx_first'//запустил рабочий контейнер
-						sh 'docker tag mynginx_first mynginx_first_image_bad'//переименовал бракованый образ 
-						sh 'docker tag mynginx_first_stable_image mynginx_first'//переименовал стабильный образ назад
-						sh 'docker rmi mynginx_first_image_bad'//удалил бракованный контейнер
-						return false
-					}-----<EndWork*/
 				}
-				//end script
             }
         }
     }
