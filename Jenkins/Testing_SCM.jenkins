@@ -28,7 +28,7 @@ pipeline {
 				sh 'docker run --name mynginx_first -d -p 80:80 -t mynginx_first'
 				sh 'docker exec mynginx_first wget -O /usr/local/nginx/html/index.html https://raw.githubusercontent.com/MiraD1n/OpsWorks/master/WebProject/index.html'
 				//test error
-				sh 'docker exec rm //usr/local/nginx/html/index.html'
+				sh 'docker exec mynginx_first rm /usr/local/nginx/html/index.html'
 				//do comment below to test crash
 				sh 'docker exec mynginx_first service nginx start'
 			}
