@@ -1,17 +1,14 @@
-# Исходные данные:
-1. Установленный docker/docker-compose
-2. docker-compose.yml файл для запуска Jenkins
-
 # Запуск Jenkins
-1. перейти в директорию с docker-compose.yml файл для запуска Jenkins
-2. выполнить команду docker-compose up -d
-3. дождатся запуска Jenkins
-4. через команду docker logs <CONTAINER ID> взять password обрамленный символами *****
-5. перейти по URL http://localhost:8080
-6. активировать Jenkins через ввод пароля
-7. установить рекомендуемые плагины
-8. установить плагин Docker
-9. Manage Jenkins -> Configure System -> Add a new cloud *в самом низу страницы
+1. Выполнить git clone https://github.com/MiraD1n/OpsWorks.git
+2. перейти в директорию cd ./Jenkins
+3. выполнить команду docker-compose up -d
+4. дождатся запуска Jenkins
+5. через команду docker logs <CONTAINER ID> взять password обрамленный символами *****
+6. перейти по URL http://localhost:8080
+7. активировать Jenkins через ввод пароля
+8. установить рекомендуемые плагины
+9. установить плагин Docker
+10. Manage Jenkins -> Configure System -> Add a new cloud *в самом низу страницы
 * настроить Pipeline Model Definition
 * Docker Label: docker-agent
 * Docker registry URL: tcp://DOCKER_HOSTNAME_IP:2375
@@ -41,8 +38,8 @@
 * Connect method: Connect with SSH
 * SSH key: Inject SSH key
 * User: root
-10. Apply -> Save
-11. Restart Jenkins
+11. Apply -> Save
+12. Restart Jenkins
 
 # Создание проекта на деплой NGINX
 1. New Item
