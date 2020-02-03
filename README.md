@@ -61,6 +61,7 @@
 2. после окончания выполнения билда перейти по tcp://DOCKER_HOSTNAME_IP:80 и убедится в доступности статичной страницы HTML
 ## Тест 1 
 1. внести правки в https://github.com/MiraD1n/OpsWorks/blob/master/WebProject/index.html
+> можно внести правки и в файл https://github.com/MiraD1n/OpsWorks/blob/master/NGINX/Dockerfile установив новую версию NGINX, но время деплоя увеличится в связи с повторной сборкой
 2. запустить билд повторно
 3. после окончания выполнения билда перейти по tcp://DOCKER_HOSTNAME_IP:80 и убедится в доступности статичной страницы HTML + внесенные правки
 ## Тест 2
