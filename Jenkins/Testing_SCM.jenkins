@@ -41,6 +41,12 @@ pipeline {
 						def code = sh(script: 'curl -sL --connect-timeout 20 --max-time 30 -w "%{http_code}\\n" "http://192.168.0.100/" -o /dev/null', returnStdout: true)
 						if (code.trim().equals("200")) {
 							echo "Good"
+							catchError {	
+								sh 'docker rm mynginx_first_stable'
+								sh 'docker rmi mynginx_first_stable_image'
+							}
+							return
+							/*//work
 							try{
 								sh 'docker rm mynginx_first_stable'
 								sh 'docker rmi mynginx_first_stable_image'
@@ -50,7 +56,8 @@ pipeline {
 								echo "catch it"
 								return
 							}							
-							//return true
+							//stop commit*/
+							
 						} else {
 							echo "Not Good"
 							sh 'docker stop mynginx_first'//остановил бракованый контейнер
