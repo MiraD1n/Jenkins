@@ -88,5 +88,11 @@ pipeline {
 				}
             }
         }
-    }
+		stage("End"){	
+			steps {
+				//prevent failure for first build
+				sh 'exit 0'
+			}
+		}
+	}		
 }
