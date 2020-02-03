@@ -1,4 +1,3 @@
-//*********** README
 # Исходные данные:
 1. Установленный docker/docker-compose
 2. docker-compose.yml файл для запуска Jenkins
@@ -13,21 +12,21 @@
 7. установить рекомендуемые плагины
 8. установить плагин Docker
 9. настроить Pipeline Model Definition
->> Docker Label: docker-agent
->> Docker registry URL: tcp://DOCKER_HOSTNAME_IP:2375
-> настроить плагин Docker (Manage Jenkins -> Configure System -> Add a new cloud *в самом низу страницы)
+* Docker Label: docker-agent
+* Docker registry URL: tcp://DOCKER_HOSTNAME_IP:2375
+10. настроить плагин Docker (Manage Jenkins -> Configure System -> Add a new cloud *в самом низу страницы)
 >> Docker cloud details...
 >>> Name: docker
 >>> Docker Host URI: tcp://DOCKER_HOSTNAME_IP:2375
 >>> Выполнить Test Connection: при успешном подключении отображает версию
 >>>> *в случае ошибки необходимо внести правки в конфигурационные файлы на хосте с docker
->>>>> # vim /etc/default/docker -> и добавить ExecStart=/usr/bin/dockerd -H fd:// -H tcp://0.0.0.0:2375
->>>>> # vim /lib/systemd/system/docker.service -> и внести правки:
+>>>>> vim /etc/default/docker -> и добавить ExecStart=/usr/bin/dockerd -H fd:// -H tcp://0.0.0.0:2375
+>>>>> vim /lib/systemd/system/docker.service -> и внести правки:
 >>>>>> ExecStart=/usr/bin/dockerd -H fd://                <--- before
 >>>>>> ExecStart=/usr/bin/dockerd -H fd:// -H tcp://0.0.0.0:2375    <--- After
 >>>>> выполнить рестарт докера
->>>>>> # systemctl daemon-reload
->>>>>> # systemctl restart docker
+>>>>>> systemctl daemon-reload
+>>>>>> systemctl restart docker
 >>>> провести повторную попытку подключения
 >>> Enabled: true
 >> Docker Agent templates
@@ -41,18 +40,18 @@
 >>> Connect method: Connect with SSH
 >>>> SSH key: Inject SSH key
 >>>>> User: root
-> Apply -> Save
-> Restart Jenkins
+11. Apply -> Save
+12. Restart Jenkins
 
 # Создание проекта на деплой NGINX
-> New Item
-> Enter an item name
-> Выбираем Pipeline -> OK
-> Pipeline -> Pipeline script from SCM
+1. New Item
+2. Enter an item name
+3. Выбираем Pipeline -> OK
+4. Pipeline -> Pipeline script from SCM
 >> SCM -> Git
 >>> Repository URL: https://github.com/MiraD1n/OpsWorks.git
 >>> Script Path: Jenkins/Build_NGINX.jenkins
-> Apply -> Save
+5. Apply -> Save
 
 # Запуск деплоя и тестирование:
 ## Деплой
@@ -79,8 +78,3 @@
 2. внести правки в https://github.com/MiraD1n/OpsWorks/blob/master/WebProject/index.html
 3. запустить билд повторно
 4. после окончания выполнения билда перейти по tcp://DOCKER_HOSTNAME_IP:80 и убедится в доступности статичной страницы HTML + внесенные правки в Тесте 4
-
-
-
-
-
