@@ -12,8 +12,8 @@
 7. установить рекомендуемые плагины
 8. установить плагин Docker
 9. настроить Pipeline Model Definition
-* Docker Label: docker-agent
-* Docker registry URL: tcp://DOCKER_HOSTNAME_IP:2375
+>> Docker Label: docker-agent
+>> Docker registry URL: tcp://DOCKER_HOSTNAME_IP:2375
 10. настроить плагин Docker (Manage Jenkins -> Configure System -> Add a new cloud *в самом низу страницы)
 >> Docker cloud details...
 >>> Name: docker
